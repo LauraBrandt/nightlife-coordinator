@@ -7,13 +7,6 @@ import Search from './Search';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 
-// const BARDATA = [
-//   {
-//     yelpID: "foundation-raleigh",
-//     attendees: ["Laura Brandt", "Martina Enlo"]
-//   }
-// ];
-
 class App extends Component {
   constructor() {
     super()
@@ -29,13 +22,13 @@ class App extends Component {
       popoverAnchorEl: {}
     }
 
-    this.handleSearch = this.handleSearch.bind(this);
     this.getBars = this.getBars.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
-    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleShowPopover = this.handleShowPopover.bind(this);
     this.handleRequestClosePopover = this.handleRequestClosePopover.bind(this);
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
   componentDidMount() {
@@ -44,11 +37,6 @@ class App extends Component {
     if (location) {
       this.getBars(location);
     }
-  }
-
-  handleSearch(e) {
-    e.preventDefault();
-    window.location.href = `/search?location=${this.state.location}`;
   }
 
   getBars(location) {
@@ -107,18 +95,20 @@ class App extends Component {
     });
   }
 
+  /* For Search component */
+
   handleLocationChange(e) {
     this.setState({
       location: e.target.value
     });
   }
 
-  handleRequestCloseSnackbar() {
-    this.setState({
-      error: false,
-      errorMessage: ""
-    });
+  handleSearch(e) {
+    e.preventDefault();
+    window.location.href = `/search?location=${this.state.location}`;
   }
+
+  /* For BarList component */
 
   handleShowPopover(e) {
     e.preventDefault();
@@ -134,6 +124,15 @@ class App extends Component {
       attendeesPopoverOpen: false,
     });
   };
+
+  /* For Snackbar component */
+
+  handleRequestCloseSnackbar() {
+    this.setState({
+      error: false,
+      errorMessage: ""
+    });
+  }
 
   render() {
     return (
