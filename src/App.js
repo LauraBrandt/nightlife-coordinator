@@ -24,7 +24,9 @@ class App extends Component {
       numBars: 0,
       loading: false,
       error: false,
-      errorMessage: ""
+      errorMessage: "",
+      attendeesPopoverOpen: false,
+      popoverAnchorEl: {}
     }
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -32,6 +34,8 @@ class App extends Component {
     this.getAttendees = this.getAttendees.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
+    this.handleShowPopover = this.handleShowPopover.bind(this);
+    this.handleRequestClosePopover = this.handleRequestClosePopover.bind(this);
   }
 
   componentDidMount() {
@@ -116,6 +120,21 @@ class App extends Component {
     });
   }
 
+  handleShowPopover(e) {
+    e.preventDefault();
+
+    this.setState({
+      attendeesPopoverOpen: true,
+      popoverAnchorEl: e.currentTarget,
+    });
+  }
+
+  handleRequestClosePopover = () => {
+    this.setState({
+      attendeesPopoverOpen: false,
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -128,7 +147,15 @@ class App extends Component {
         {this.state.loading &&
           <CircularProgress size={60} thickness={5} className="app__progress" style={{display: 'block'}}/>
         }
-        {this.state.location && <BarList bars={this.state.bars} />}
+        {this.state.location && 
+          <BarList 
+            bars={this.state.bars} 
+            handleShowPopover={this.handleShowPopover}
+            handleRequestClosePopover={this.handleRequestClosePopover}
+            popoverOpen={this.state.attendeesPopoverOpen}
+            popoverAnchorEl={this.state.popoverAnchorEl}
+          />
+        }
 
         <Snackbar
           open={this.state.error}
