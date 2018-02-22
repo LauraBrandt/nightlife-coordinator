@@ -30,6 +30,7 @@ class App extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.getBars = this.getBars.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
@@ -41,8 +42,9 @@ class App extends Component {
     }
   }
 
-  handleSearch(location) {
-    window.location.href = `/search?location=${location}`;
+  handleSearch(e) {
+    e.preventDefault();
+    window.location.href = `/search?location=${this.state.location}`;
   }
 
   getBars(location) {
@@ -101,6 +103,12 @@ class App extends Component {
     });
   }
 
+  handleLocationChange(e) {
+    this.setState({
+      location: e.target.value
+    });
+  }
+
   handleRequestCloseSnackbar() {
     this.setState({
       error: false,
@@ -111,7 +119,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Search handleSearch={this.handleSearch} location={this.state.location} disabled={this.state.loading}/>
+        <Search 
+          handleChange={this.handleLocationChange}
+          handleSearch={this.handleSearch} 
+          location={this.state.location} 
+          disabled={this.state.loading}
+        />
         {this.state.loading &&
           <CircularProgress size={60} thickness={5} className="app__progress" style={{display: 'block'}}/>
         }
