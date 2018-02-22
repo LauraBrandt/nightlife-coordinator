@@ -17,8 +17,8 @@ const Bar = (props) => {
           onClick={props.handleShowPopover}
         />
         <Popover
-          open={this.state.popoverOpen && props.bar.attendees.length > 0}
-          anchorEl={this.state.popoverAnchorEl}
+          open={props.popoverOpen && props.bar.attendees.length > 0}
+          anchorEl={props.popoverAnchorEl}
           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={props.handleRequestClosePopover}
