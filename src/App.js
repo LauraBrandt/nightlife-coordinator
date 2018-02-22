@@ -7,13 +7,6 @@ import Search from './Search';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 
-// const BARDATA = [
-//   {
-//     yelpID: "foundation-raleigh",
-//     attendees: ["Laura Brandt", "Martina Enlo"]
-//   }
-// ];
-
 class App extends Component {
   constructor() {
     super()
@@ -24,12 +17,17 @@ class App extends Component {
       numBars: 0,
       loading: false,
       error: false,
-      errorMessage: ""
+      errorMessage: "",
+      attendeesPopoverOpen: false,
+      popoverAnchorEl: {}
     }
 
-    this.handleSearch = this.handleSearch.bind(this);
     this.getBars = this.getBars.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleShowPopover = this.handleShowPopover.bind(this);
+    this.handleRequestClosePopover = this.handleRequestClosePopover.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
@@ -39,10 +37,6 @@ class App extends Component {
     if (location) {
       this.getBars(location);
     }
-  }
-
-  handleSearch(location) {
-    window.location.href = `/search?location=${location}`;
   }
 
   getBars(location) {
@@ -101,6 +95,38 @@ class App extends Component {
     });
   }
 
+  /* For Search component */
+
+  handleLocationChange(e) {
+    this.setState({
+      location: e.target.value
+    });
+  }
+
+  handleSearch(e) {
+    e.preventDefault();
+    window.location.href = `/search?location=${this.state.location}`;
+  }
+
+  /* For BarList component */
+
+  handleShowPopover(e) {
+    e.preventDefault();
+
+    this.setState({
+      attendeesPopoverOpen: true,
+      popoverAnchorEl: e.currentTarget,
+    });
+  }
+
+  handleRequestClosePopover = () => {
+    this.setState({
+      attendeesPopoverOpen: false,
+    });
+  };
+
+  /* For Snackbar component */
+
   handleRequestCloseSnackbar() {
     this.setState({
       error: false,
@@ -111,11 +137,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Search handleSearch={this.handleSearch} location={this.state.location} disabled={this.state.loading}/>
+        <Search 
+          handleChange={this.handleLocationChange}
+          handleSearch={this.handleSearch} 
+          location={this.state.location} 
+          disabled={this.state.loading}
+        />
         {this.state.loading &&
           <CircularProgress size={60} thickness={5} className="app__progress" style={{display: 'block'}}/>
         }
-        {this.state.location && <BarList bars={this.state.bars} />}
+        {this.state.location && 
+          <BarList 
+            bars={this.state.bars} 
+            handleShowPopover={this.handleShowPopover}
+            handleRequestClosePopover={this.handleRequestClosePopover}
+            popoverOpen={this.state.attendeesPopoverOpen}
+            popoverAnchorEl={this.state.popoverAnchorEl}
+          />
+        }
 
         <Snackbar
           open={this.state.error}

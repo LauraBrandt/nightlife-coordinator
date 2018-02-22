@@ -1,11 +1,18 @@
 import React from 'react';
 import Bar from './Bar';
 
-const BarList = ({ bars }) => {
+const BarList = (props) => {
   return (
     <div>
-      {bars && bars.map(bar => 
-        <Bar bar={bar} key={bar.id} />
+      {props.bars && props.bars.map(bar => 
+        <Bar 
+          key={bar.id} 
+          bar={bar} 
+          handleShowPopover={props.handleShowPopover}
+          handleRequestClosePopover={props.handleRequestClosePopover}
+          popoverOpen={props.popoverOpen}
+          popoverAnchorEl={props.popoverAnchorEl}
+        />
       )}
     </div>
   );
