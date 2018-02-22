@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -10,6 +11,8 @@ import App from './App';
 import Login from './Login';
 import Signup from './Signup';
 import registerServiceWorker from './registerServiceWorker';
+
+injectTapEventPlugin();
 
 ReactDOM.render(
   <MuiThemeProvider>
