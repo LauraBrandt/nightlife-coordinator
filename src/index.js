@@ -7,12 +7,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // muiTheme={getMuiTheme(darkBaseTheme)} (place as prop in MuiThemeProvider)
 import './index.css';
 import App from './App';
+import Login from './Login';
+import Signup from './Signup';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <MuiThemeProvider>
      <BrowserRouter>
         <div>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/signup' component={Signup}/>
           <Route path='/' component={App} />
         </div>
      </BrowserRouter>

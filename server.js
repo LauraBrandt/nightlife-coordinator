@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
-const routes = require('./routes/routes');
+const apiRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -22,7 +23,8 @@ mongoose.connect('mongodb://localhost:27017/nightlife-coordinator')
 // serve pages and routes
 app.use(express.static('build'));
 
-app.use('/api', routes);
+app.use('/api', apiRoutes);
+app.use('/auth', authRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
