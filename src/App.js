@@ -152,7 +152,7 @@ class App extends Component {
         <Search 
           handleChange={this.handleLocationChange}
           handleSearch={this.handleSearch} 
-          location={this.state.location} 
+          location={this.state.location || ""} 
           disabled={this.state.loading}
         />
         {this.state.loading &&
