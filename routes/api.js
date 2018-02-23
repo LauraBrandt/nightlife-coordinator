@@ -6,7 +6,7 @@ const User = require('../models/user.js');
 
 router.get('/bars/:location', (req, res) => {
   const url = `https://api.yelp.com/v3/businesses/search?term=bar&location=${req.params.location}`;
-  const accessToken = "Jqj9Tq7jmAmJvVRtnKRI7BRO07l7PLQpzqlU7gYKTSIkuqoeyBAatRfVVv9M5KjQRr5pKx7DfFAGKKc-Ztq_84uq-_FMkCTvbPoVxK4YwDq8SZoip1hvxTAJj42MWnYx";
+  const accessToken = process.env.YELP_APIKEY;
   axios({ method: 'get', url: url, headers: { 'Authorization': 'Bearer ' + accessToken } })
     .then(result => {
       res.send(result.data);

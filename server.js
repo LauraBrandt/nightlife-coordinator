@@ -10,6 +10,7 @@ const localLoginStrategy = require('./utils/local-login');
 // const authCheckMiddleware = require('./utils/auth-check');
 const apiRoutes = require('./routes/api');
 const authRoutes = require('./routes/auth');
+require('dotenv').config()
 
 const app = express();
 
@@ -26,7 +27,7 @@ passport.use('local-login', localLoginStrategy);
 // app.use('/api', authCheckMiddleware);
 
 // connect to db
-mongoose.connect('mongodb://localhost:27017/nightlife-coordinator')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() =>  console.log('Database connection successful'))
   .catch((err) => console.error(err));
 
