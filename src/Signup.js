@@ -47,6 +47,10 @@ class SignUpPage extends Component {
       self.setState({
         errors: response.data.errors || {}
       });
+
+      localStorage.setItem('successMessage', response.data.message);
+
+      window.location.href = '/login';
     })
     .catch(function (error) {
       const errors = error.response.data.errors ? error.response.data.errors : {};

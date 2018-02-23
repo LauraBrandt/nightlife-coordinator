@@ -2,8 +2,12 @@
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const passport = require('passport');
 const mongoose = require('mongoose');
 const express = require('express');
+const localSignupStrategy = require('./utils/local-signup');
+const localLoginStrategy = require('./utils/local-login');
+// const authCheckMiddleware = require('./utils/auth-check');
 const apiRoutes = require('./routes/api');
 const authRoutes = require('./routes/auth');
 
@@ -14,6 +18,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(cors());
+app.use(passport.initialize());
+
+// load passport strategies and authentication checker middleware
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
+// app.use('/api', authCheckMiddleware);
 
 // connect to db
 mongoose.connect('mongodb://localhost:27017/nightlife-coordinator')

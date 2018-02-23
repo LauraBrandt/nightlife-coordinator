@@ -4,13 +4,20 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Auth from './Auth';
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
 
+    let successMessage = localStorage.getItem('successMessage') || '';
+    if (successMessage) {
+      localStorage.removeItem('successMessage');
+    }
+
     this.state = {
       errors: {},
+      successMessage,
       user: {
         email: '',
         password: ''
@@ -35,6 +42,11 @@ class LoginPage extends Component {
       self.setState({
         errors: response.data.errors || {}
       });
+
+      Auth.authenticateUser(response.data.token);
+
+      const currLocation = localStorage.getItem('currentLocation') || '';
+      window.location.href = `/${currLocation}`;
     })
     .catch(function (error) {
       const errors = error.response.data.errors ? error.response.data.errors : {};
@@ -62,7 +74,7 @@ class LoginPage extends Component {
         <form onSubmit={this.processForm}>
           <h2>Login</h2>
 
-          {/* {successMessage && <p>{successMessage}</p>} */}
+          {this.state.successMessage && <p>{this.state.successMessage}</p>}
           {this.state.errors.summary && <p>{this.state.errors.summary}</p>}
 
           <div>

@@ -6,12 +6,14 @@ import BarList from './BarList';
 import Search from './Search';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
+import Auth from './Auth';
 
 class App extends Component {
   constructor() {
     super()
 
     this.state = { 
+      isAuthenticated: false,
       location: "",
       bars: [],
       numBars: 0,
@@ -33,10 +35,19 @@ class App extends Component {
 
   componentDidMount() {
     const location = queryString.parse(this.props.location.search).location;
-    this.setState({ location });
+    this.setState({ 
+      location,
+      isAuthenticated: Auth.isUserAuthenticated()
+    });
     if (location) {
       this.getBars(location);
+    } else {
+      localStorage.removeItem('currentLocation');
     }
+  }
+
+  componentWillUnmount() {
+    localStorage.removeItem('currentLocation');
   }
 
   getBars(location) {
@@ -105,6 +116,7 @@ class App extends Component {
 
   handleSearch(e) {
     e.preventDefault();
+    localStorage.setItem('currentLocation', this.state.location);
     window.location.href = `/search?location=${this.state.location}`;
   }
 
