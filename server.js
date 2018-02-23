@@ -27,9 +27,10 @@ passport.use('local-login', localLoginStrategy);
 // app.use('/api', authCheckMiddleware);
 
 // connect to db
+mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI)
   .then(() =>  console.log('Database connection successful'))
-  .catch((err) => console.error(err));
+  .catch((err) => { console.error(err); process.exit(1); });
 
 // serve pages and routes
 app.use(express.static('build'));
