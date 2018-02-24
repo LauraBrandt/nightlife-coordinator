@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
-import CircularProgress from 'material-ui/CircularProgress';
-import BarList from './BarList';
+import Header from './Header';
 import Search from './Search';
+import BarList from './BarList';
+import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 import Auth from './Auth';
@@ -149,6 +150,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header isAuth={this.state.isAuthenticated}/>
         <Search 
           handleChange={this.handleLocationChange}
           handleSearch={this.handleSearch} 
