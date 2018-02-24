@@ -19,13 +19,19 @@ ReactDOM.render(
   <MuiThemeProvider>
      <BrowserRouter>
         <Switch>
-          <Route exact path='/login' component={Login}/>
+          <Route exact path='/login' render={() => {
+            const location = localStorage.getItem('currentLocation');
+            return !Auth.isUserAuthenticated() ?
+              <Login />
+              :
+              location ? <Redirect to={`/search?location=${location}`}/> : <Redirect to='/'/>
+          }}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/logout' render={() => {
               Auth.deauthenticateUser();
-              return <Redirect to='/'/>
-            }
-          }/>
+              const location = localStorage.getItem('currentLocation');
+              return location ? <Redirect to={`/search?location=${location}`}/> : <Redirect to='/'/>
+          }}/>
           <Route path='/' component={App} />
         </Switch>
      </BrowserRouter>

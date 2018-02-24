@@ -45,8 +45,15 @@ class LoginPage extends Component {
 
       Auth.authenticateUser(response.data.token);
 
-      const currLocation = localStorage.getItem('currentLocation') || '';
-      window.location.href = `/${currLocation}`;
+      localStorage.setItem('userID', response.data.user.id);
+      localStorage.setItem('userName', response.data.user.name);
+
+      const currLocation = localStorage.getItem('currentLocation');
+      if (currLocation) {
+        window.location.href = `/search?location=${currLocation}`;
+      } else {
+        window.location.href = '/';
+      }
     })
     .catch(function (error) {
       const errors = error.response.data.errors ? error.response.data.errors : {};

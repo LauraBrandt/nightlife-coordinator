@@ -35,20 +35,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const location = queryString.parse(this.props.location.search).location;
+    const location = queryString.parse(this.props.location.search).location || '';
+    localStorage.setItem('currentLocation', location);
+
     this.setState({ 
       location,
       isAuthenticated: Auth.isUserAuthenticated()
     });
     if (location) {
       this.getBars(location);
-    } else {
-      localStorage.removeItem('currentLocation');
     }
-  }
-
-  componentWillUnmount() {
-    localStorage.removeItem('currentLocation');
   }
 
   getBars(location) {
@@ -117,7 +113,6 @@ class App extends Component {
 
   handleSearch(e) {
     e.preventDefault();
-    localStorage.setItem('currentLocation', this.state.location);
     window.location.href = `/search?location=${this.state.location}`;
   }
 
