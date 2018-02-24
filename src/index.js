@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -18,7 +18,7 @@ injectTapEventPlugin();
 ReactDOM.render(
   <MuiThemeProvider>
      <BrowserRouter>
-        <div>
+        <Switch>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/logout' render={() => {
@@ -27,7 +27,7 @@ ReactDOM.render(
             }
           }/>
           <Route path='/' component={App} />
-        </div>
+        </Switch>
      </BrowserRouter>
    </MuiThemeProvider>, 
   document.getElementById('root'));
