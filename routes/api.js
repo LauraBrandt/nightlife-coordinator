@@ -46,30 +46,17 @@ router.put('/attendees/:barid/:userid', (req, res) => {
       
       bar.save((err, bar) => {
         if (err) return next(err);
-
-        Bar.findById(bar._id)
-          .populate('attendees')
-          .exec((err, bar) => {
-            if (err) return next(err);
-
-            return res.send({bar, action});
-          });
+        return res.send({bar, action});
       });
+      
     } else { // bar is not in db, add it and attendee
       const newBar = new Bar({yelpID: barYelpId, attendees: [userId,]});
       action = "add"
 
       newBar.save((err, bar) => {
         if (err) return next(err);
-        
-        Bar.findById(bar._id)
-          .populate('attendees')
-          .exec((err, bar) => {
-            if (err) return next(err);
-
-            return res.send({bar, action});
-          });
-      })
+        return res.send({bar, action});
+      });
     }
   });
 });
