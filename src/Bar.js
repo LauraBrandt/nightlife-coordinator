@@ -1,41 +1,73 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
+import Checkbox from 'material-ui/Checkbox';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
-const Bar = (props) => {
-  return (
-    <Paper zDepth={2} className="bar__paper">
-      <img src={props.bar.image_url} alt="" className="bar__img"/>
-      <div className="bar__info">
-        <a href={props.bar.url} className="bar__name">{props.bar.name}</a>
-        <RaisedButton 
-          label={`${props.bar.attendees.length} Going`}
-          primary={true}
-          onClick={props.handleShowPopover}
-        />
-        <Popover
-          open={props.popoverOpen && props.bar.attendees.length > 0}
-          anchorEl={props.popoverAnchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={props.handleRequestClosePopover}
-        >
-          <Menu>
-            {props.bar.attendees.map(user => <MenuItem primaryText={user} key={user}/>)}
-          </Menu>
-        </Popover>
-        {/* <RaisedButton 
-          label="Going" 
-          secondary={true} 
-          className="results__is-going-button" 
-          onClick={props.toggleUserGoing}
-        /> */}
-      </div>
-    </Paper>
-  );
+class Bar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      popoverOpen: false,
+      popoverAnchorEl: {}
+    }
+
+    this.handleShowPopover = this.handleShowPopover.bind(this);
+    this.handleRequestClosePopover = this.handleRequestClosePopover.bind(this);
+  }
+
+  handleShowPopover(e) {
+    e.preventDefault();
+
+    this.setState({
+      popoverOpen: true,
+      popoverAnchorEl: e.currentTarget,
+    });
+  }
+
+  handleRequestClosePopover = () => {
+    this.setState({
+      popoverOpen: false,
+    });
+  };
+
+  render() {
+    const { bar, user, isAuth } = this.props
+    return (
+      <Paper zDepth={2} className="bar__paper">
+        <img src={bar.image_url} alt="" className="bar__img"/>
+        <div className="bar__info">
+          <a href={bar.url} className="bar__name">{bar.name}</a>
+          <RaisedButton 
+            label={`${bar.attendees.length} Going`}
+            primary={true}
+            onClick={this.handleShowPopover}
+          />
+          <Popover
+            open={this.state.popoverOpen && bar.attendees.length > 0}
+            anchorEl={this.state.popoverAnchorEl}
+            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            onRequestClose={this.handleRequestClosePopover}
+          >
+            <Menu>
+              {bar.attendees.map(attendee => <MenuItem primaryText={attendee.displayName} key={attendee._id}/>)}
+            </Menu>
+          </Popover>
+          <Checkbox
+            label="I'm in!"
+            name={bar.id}
+            checked={bar.attendees.find( attendee => attendee._id === user.id ) ? true : false}
+            onCheck={this.props.updateCheckGoing}
+            disabled={!isAuth}
+          />
+        </div>
+      </Paper>
+    );
+  }
 }
 
 export default Bar;

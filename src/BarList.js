@@ -8,10 +8,9 @@ const BarList = (props) => {
         <Bar 
           key={bar.id} 
           bar={bar} 
-          handleShowPopover={props.handleShowPopover}
-          handleRequestClosePopover={props.handleRequestClosePopover}
-          popoverOpen={props.popoverOpen}
-          popoverAnchorEl={props.popoverAnchorEl}
+          isAuth={props.isAuth}
+          user={props.user}
+          updateCheckGoing={props.updateUserGoing}
         />
       )}
     </div>

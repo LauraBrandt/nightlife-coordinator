@@ -17,10 +17,55 @@ router.get('/bars/:location', (req, res) => {
 });
 
 router.get('/attendees/:barid', (req, res) => {
-  Bar.findOne({ yelpID: req.params.barid }, (err, bar) => {
+  Bar.findOne({ yelpID: req.params.barid })
+    .populate('attendees')
+    .exec((err, bar) => {
+      if (err) return next(err);
+      const attendees = bar ? bar.attendees : [];
+      return res.json({attendees: attendees});
+    });
+});
+
+router.put('/attendees/:barid/:userid', (req, res) => {
+  const barYelpId = req.params.barid;
+  const userId = req.params.userid;
+
+  Bar.findOne({ yelpID: barYelpId }, (err, bar) => {
     if (err) return next(err);
-    const attendees = bar ? bar.attendees : [];
-    return res.json({attendees: attendees});
+
+    if (bar) { // bar is already in db, add/remove attendee
+      const index = bar.attendees.indexOf(userId);
+      if (index === -1) {
+        bar.attendees.push(userId);
+      } else {
+        bar.attendees.splice(index, 1);
+      }
+      
+      bar.save((err, bar) => {
+        if (err) return next(err);
+
+        Bar.findById(bar._id)
+          .populate('attendees')
+          .exec((err, bar) => {
+            if (err) return next(err);
+
+            return res.send({bar});
+          });
+      });
+    } else { // bar is not in db, add it and attendee
+      const newBar = new Bar({yelpID: barYelpId, attendees: [userId,]});
+      newBar.save((err, bar) => {
+        if (err) return next(err);
+        
+        Bar.findById(bar._id)
+          .populate('attendees')
+          .exec((err, bar) => {
+            if (err) return next(err);
+
+            return res.send({bar});
+          });
+      })
+    }
   });
 });
 

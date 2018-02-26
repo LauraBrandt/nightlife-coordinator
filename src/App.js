@@ -15,33 +15,38 @@ class App extends Component {
 
     this.state = { 
       isAuthenticated: false,
+      user: {},
       location: "",
       bars: [],
       numBars: 0,
       loading: false,
       error: false,
       errorMessage: "",
-      attendeesPopoverOpen: false,
-      popoverAnchorEl: {}
     }
 
     this.getBars = this.getBars.bind(this);
     this.getAttendees = this.getAttendees.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleShowPopover = this.handleShowPopover.bind(this);
-    this.handleRequestClosePopover = this.handleRequestClosePopover.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
+    this.updateUserGoing = this.updateUserGoing.bind(this);
   }
 
   componentDidMount() {
     const location = queryString.parse(this.props.location.search).location || '';
     localStorage.setItem('currentLocation', location);
 
+    const user = {
+      id: localStorage.getItem('userID'),
+      name: localStorage.getItem('userName')
+    }
+
     this.setState({ 
       location,
-      isAuthenticated: Auth.isUserAuthenticated()
+      user,
+      isAuthenticated: Auth.isUserAuthenticated(), 
     });
+
     if (location) {
       this.getBars(location);
     }
@@ -118,20 +123,29 @@ class App extends Component {
 
   /* For BarList component */
 
-  handleShowPopover(e) {
+  updateUserGoing(e) {
     e.preventDefault();
 
-    this.setState({
-      attendeesPopoverOpen: true,
-      popoverAnchorEl: e.currentTarget,
-    });
-  }
+    const barID = e.target.name;
+    const userID = this.state.user.id;
 
-  handleRequestClosePopover = () => {
-    this.setState({
-      attendeesPopoverOpen: false,
-    });
-  };
+    axios.put(`/api/attendees/${barID}/${userID}`)
+      .then(res => {
+        console.log(res.data);
+        this.getAttendees(this.state.bars)
+          .then(bars => {
+            this.setState({
+              bars
+            });
+          });
+        // or: add new attendee in this.state.bars (if not, then get rid of populate in this route)
+      })
+      .catch(err => {
+        console.log(err);
+        console.log(err.response.data);
+      });
+
+  }
 
   /* For Snackbar component */
 
@@ -158,10 +172,9 @@ class App extends Component {
         {this.state.location && 
           <BarList 
             bars={this.state.bars} 
-            handleShowPopover={this.handleShowPopover}
-            handleRequestClosePopover={this.handleRequestClosePopover}
-            popoverOpen={this.state.attendeesPopoverOpen}
-            popoverAnchorEl={this.state.popoverAnchorEl}
+            user={this.state.user}
+            isAuth={this.state.isAuthenticated}
+            updateUserGoing={this.updateUserGoing}
           />
         }
 
