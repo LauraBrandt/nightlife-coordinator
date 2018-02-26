@@ -32,13 +32,16 @@ router.put('/attendees/:barid/:userid', (req, res) => {
 
   Bar.findOne({ yelpID: barYelpId }, (err, bar) => {
     if (err) return next(err);
+    let action;
 
     if (bar) { // bar is already in db, add/remove attendee
       const index = bar.attendees.indexOf(userId);
       if (index === -1) {
         bar.attendees.push(userId);
+        action = "add"
       } else {
         bar.attendees.splice(index, 1);
+        action = "remove"
       }
       
       bar.save((err, bar) => {
@@ -49,11 +52,13 @@ router.put('/attendees/:barid/:userid', (req, res) => {
           .exec((err, bar) => {
             if (err) return next(err);
 
-            return res.send({bar});
+            return res.send({bar, action});
           });
       });
     } else { // bar is not in db, add it and attendee
       const newBar = new Bar({yelpID: barYelpId, attendees: [userId,]});
+      action = "add"
+
       newBar.save((err, bar) => {
         if (err) return next(err);
         
@@ -62,7 +67,7 @@ router.put('/attendees/:barid/:userid', (req, res) => {
           .exec((err, bar) => {
             if (err) return next(err);
 
-            return res.send({bar});
+            return res.send({bar, action});
           });
       })
     }

@@ -20,8 +20,8 @@ class App extends Component {
       bars: [],
       numBars: 0,
       loading: false,
-      error: false,
-      errorMessage: "",
+      snackbarOpen: false,
+      snackbarMessage: "",
     }
 
     this.getBars = this.getBars.bind(this);
@@ -58,8 +58,8 @@ class App extends Component {
       .then(res => {
         if (res.data.error) {
           this.setState({
-            error: true,
-            errorMessage: res.data.error.description,
+            snackbarOpen: true,
+            snackbarMessage: res.data.error.description,
             loading: false
           });
         } else {
@@ -129,10 +129,15 @@ class App extends Component {
 
     axios.put(`/api/attendees/${barID}/${userID}`)
       .then(res => {
+        const barName = this.state.bars.find(bar => bar.id === res.data.bar.yelpID).name
         this.getAttendees(this.state.bars)
           .then(bars => {
             this.setState({
-              bars
+              bars,
+              snackbarOpen: true,
+              snackbarMessage: res.data.action === "add" ?
+                `You're going to ${barName}!` :
+                `You're no longer going to ${barName}.`
             });
           });
       })
@@ -147,8 +152,8 @@ class App extends Component {
 
   handleRequestCloseSnackbar() {
     this.setState({
-      error: false,
-      errorMessage: ""
+      snackbarOpen: false,
+      snackbarMessage: ""
     });
   }
 
@@ -175,8 +180,8 @@ class App extends Component {
         }
 
         <Snackbar
-          open={this.state.error}
-          message={this.state.errorMessage}
+          open={this.state.snackbarOpen}
+          message={this.state.snackbarMessage}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestCloseSnackbar}
         />
