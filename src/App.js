@@ -81,26 +81,24 @@ class App extends Component {
 
   getAttendees(barList) {
     return new Promise((resolve,reject) => {
-      let barsAndAttendees = [];
       let totalRequests = barList.length;
       let requestsMade = 0;
 
       if (totalRequests > 0) {
-        barList.forEach(bar => {
+        barList.forEach((bar, index) => {
           axios.get(`/api/attendees/${bar.id}`)
             .then(res => {
               requestsMade += 1;
-              const attendees = res.data.attendees;
-              barsAndAttendees.push({...bar, attendees: attendees});
+              barList[index].attendees = res.data.attendees;
               if (requestsMade === totalRequests) {
-                resolve(barsAndAttendees);
+                resolve(barList);
               }
             })
             .catch(err => {
               requestsMade += 1;
-              barsAndAttendees.push({...bar, attendees: []});
+              barList[index].attendees = [];
               if (requestsMade === totalRequests) {
-                resolve(barsAndAttendees);
+                resolve(barList);
               }
             });
         });
@@ -131,14 +129,12 @@ class App extends Component {
 
     axios.put(`/api/attendees/${barID}/${userID}`)
       .then(res => {
-        console.log(res.data);
         this.getAttendees(this.state.bars)
           .then(bars => {
             this.setState({
               bars
             });
           });
-        // or: add new attendee in this.state.bars (if not, then get rid of populate in this route)
       })
       .catch(err => {
         console.log(err);
