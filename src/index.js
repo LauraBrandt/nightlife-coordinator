@@ -5,7 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {teal400, indigo400, grey100, grey50, fullWhite} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import './index.css';
+// import './index.css';
 import App from './App';
 import Login from './Login';
 import Signup from './Signup';
