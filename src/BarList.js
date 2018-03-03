@@ -9,7 +9,7 @@ const BarList = (props) => {
           key={bar.id} 
           bar={bar} 
           isAuth={props.isAuth}
-          user={props.user}
+          userId={props.userId}
           updateCheckGoing={props.updateUserGoing}
         />
       )}

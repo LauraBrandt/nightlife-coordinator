@@ -56,7 +56,7 @@ class Bar extends Component {
   }
 
   render() {
-    const { bar, user, isAuth } = this.props;
+    const { bar, userId, isAuth } = this.props;
 
     const actions = [
       <FlatButton
@@ -107,7 +107,7 @@ class Bar extends Component {
           <Checkbox
             label="I'm in!"
             name={bar.id}
-            checked={bar.attendees.find( attendee => attendee._id === user.id ) ? true : false}
+            checked={bar.attendees.find( attendee => attendee._id === userId ) ? true : false}
             onCheck={this.props.updateCheckGoing}
             disabled={!isAuth}
           />

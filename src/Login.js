@@ -46,7 +46,6 @@ class LoginPage extends Component {
       Auth.authenticateUser(response.data.token);
 
       localStorage.setItem('userID', response.data.user.id);
-      localStorage.setItem('userName', response.data.user.name);
 
       const currLocation = localStorage.getItem('currentLocation');
       if (currLocation) {

@@ -14,7 +14,7 @@ class App extends Component {
 
     this.state = { 
       isAuthenticated: false,
-      user: {},
+      userId: "",
       location: "",
       bars: [],
       numBars: 0,
@@ -35,14 +35,11 @@ class App extends Component {
     const location = queryString.parse(this.props.location.search).location || '';
     localStorage.setItem('currentLocation', location);
 
-    const user = {
-      id: localStorage.getItem('userID'),
-      name: localStorage.getItem('userName')
-    }
+    const userId = localStorage.getItem('userID')
 
     this.setState({ 
       location,
-      user,
+      userId,
       isAuthenticated: Auth.isUserAuthenticated(), 
     });
 
@@ -124,7 +121,7 @@ class App extends Component {
     e.preventDefault();
 
     const barID = e.target.name;
-    const userID = this.state.user.id;
+    const userID = this.state.userId;
 
     axios.put(`/api/attendees/${barID}/${userID}`)
       .then(res => {
@@ -173,7 +170,7 @@ class App extends Component {
         {this.state.location && 
           <BarList 
             bars={this.state.bars} 
-            user={this.state.user}
+            userId={this.state.userId}
             isAuth={this.state.isAuthenticated}
             updateUserGoing={this.updateUserGoing}
           />
