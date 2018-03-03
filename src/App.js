@@ -8,6 +8,8 @@ import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 import Auth from './Auth';
 
+const offline = true;
+
 class App extends Component {
   constructor() {
     super()
@@ -70,8 +72,21 @@ class App extends Component {
         }
       })
       .catch(err => {
-        this.setState({ loading: false });
         console.log(err);
+        if (offline) {
+          setTimeout(() => {
+            this.setState({
+              bars: [
+                {id: "the-dead-rabbit-new-york", name: "The Dead Rabbit", image_url: "https://s3-media3.fl.yelpcdn.com/bphoto/7txsI-CAV_BW6IN4pf5WlQ/o.jpg", url: "https://www.yelp.com/biz/the-dead-rabbit-new-york?…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: [{displayName: "Laura", _id: 123},]},
+                {id: "the-commissioner-brooklyn", name: "The Commissioner", image_url: "https://s3-media4.fl.yelpcdn.com/bphoto/pw9cgbf0snFt_c9LDV4FXg/o.jpg", url: "https://www.yelp.com/biz/the-commissioner-brooklyn…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: []},
+                {id: "the-seville-new-york", name: "The Seville", image_url: "https://s3-media1.fl.yelpcdn.com/bphoto/FsGap3w9Vu7_xxBpt3A0GA/o.jpg", url: "https://www.yelp.com/biz/the-seville-new-york?adju…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: []}
+              ]
+            })
+            this.setState({ loading: false }); 
+          }, 1000);
+        } else {
+          this.setState({ loading: false });
+        }        
       });
   }
 
