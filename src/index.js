@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
-// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-// muiTheme={getMuiTheme(darkBaseTheme)} (place as prop in MuiThemeProvider)
+import {teal400, indigo400, grey50, fullWhite} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './index.css';
 import App from './App';
 import Login from './Login';
@@ -15,8 +14,17 @@ import registerServiceWorker from './registerServiceWorker';
 
 injectTapEventPlugin();
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: teal400,
+    accent1Color: indigo400,
+    borderColor: grey50,
+    shadowColor: fullWhite,
+  }
+});
+
 ReactDOM.render(
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={muiTheme}>
      <BrowserRouter>
         <Switch>
           <Route exact path='/login' render={() => {

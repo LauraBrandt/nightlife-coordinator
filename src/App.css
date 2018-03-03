@@ -1,3 +1,41 @@
+body {
+  background-color: #272727;
+}
+
+.header__nav {
+  float: right;
+  margin-right: 1em;
+}
+
+.header__nav-button {
+  margin: 1em 0 !important;
+}
+
+.header__text {
+  color: #eee;
+  text-align: center;
+  clear: both;
+  padding: 1.5em;
+}
+
+@media (min-width: 740px) {
+  .header__text {
+    font-size: 1.3em;
+  }
+
+  .header__nav-button {
+    margin: 1em 0.5em !important;
+  }
+}
+
+.header__h1 {
+  font-family: Raleway, Roboto, sans-serif;
+}
+
+.material-icons {
+  padding-right: 10px;
+}
+
 .app__progress {
   margin: auto;
 }
