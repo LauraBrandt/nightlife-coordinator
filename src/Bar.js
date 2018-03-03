@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import {grey500} from 'material-ui/styles/colors';
 
 class Bar extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class Bar extends Component {
     this.state = {
       popoverOpen: false,
       popoverAnchorEl: {},
-      dialogOpen: false
+      dialogOpen: false,
+      dialogMessage: ""
     }
 
     this.handleShowPopover = this.handleShowPopover.bind(this);
@@ -39,8 +41,15 @@ class Bar extends Component {
     this.setState({ popoverOpen: false });
   };
 
-  handleDialogOpen = () => {
-    this.setState({ dialogOpen: true });
+  handleDialogOpen = (e) => {
+    e.preventDefault();
+    let dialogMessage;
+    if (e.target.tagName === 'SPAN') {
+      dialogMessage = "You must be logged in to see who's going."
+    } else if (e.target.tagName === 'INPUT') {
+      dialogMessage = "You must be logged in to RSVP."
+    }
+    this.setState({ dialogOpen: true, dialogMessage });
   };
 
   handleDialogClose = () => {
@@ -85,6 +94,7 @@ class Bar extends Component {
             primary={true}
             onClick={isAuth ? this.handleShowPopover : this.handleDialogOpen}
           />
+          {/* List of attendees */}
           <Popover
             open={this.state.popoverOpen && bar.attendees.length > 0}
             anchorEl={this.state.popoverAnchorEl}
@@ -96,21 +106,33 @@ class Bar extends Component {
               {bar.attendees.map(attendee => <MenuItem primaryText={attendee.displayName} key={attendee._id}/>)}
             </Menu>
           </Popover>
+
+          {/* User adds or removes themself from bar */}
+          <Checkbox
+            label="I'm in!"
+            name={bar.id}
+            checked={
+              !isAuth ?
+              false : 
+              bar.attendees.find( attendee => attendee._id === userId ) ? true : false
+            }
+            onCheck={isAuth ? this.props.updateCheckGoing : this.handleDialogOpen}
+            // disabled={!isAuth}
+            className="bar__checkbox"
+            style={!isAuth && {cursor: 'default'}}
+            iconStyle={!isAuth && {fill: grey500}}
+            labelStyle={!isAuth && {color: grey500}}
+          />
+
+          {/* Log in dialog if not auth */}
           <Dialog
             title="Please Log In"
             actions={actions}
             open={this.state.dialogOpen}
             onRequestClose={this.handleDialogClose}
           >
-            You must be logged in to see who's going.
+            {this.state.dialogMessage}
           </Dialog>
-          <Checkbox
-            label="I'm in!"
-            name={bar.id}
-            checked={bar.attendees.find( attendee => attendee._id === userId ) ? true : false}
-            onCheck={this.props.updateCheckGoing}
-            disabled={!isAuth}
-          />
         </div>
       </Paper>
     );
