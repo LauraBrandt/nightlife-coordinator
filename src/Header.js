@@ -1,10 +1,11 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
+import {grey400} from 'material-ui/styles/colors';
 
 const Header = (props) => {
   return (
     <header>
-      {props.textShowing && <nav className="header__nav">
+      <nav className="header__nav">
         {props.isAuth ? 
           <div>
             <FlatButton 
@@ -30,12 +31,12 @@ const Header = (props) => {
             />
           </div>
         }
-      </nav>}
-      <div className="header__text">
+      </nav>
+      {props.textShowing && !props.loading && <div className="header__text">
         <h1 className="header__h1">Nightlife Coordinator</h1>
-        <p><i className="material-icons">local_bar</i>See what bars people are going to.</p>
-        <p><i className="material-icons">person_pin_circle</i>Then RSVP to your favorite.</p>
-      </div>
+        <p style={{color: grey400}}><i className="material-icons">local_bar</i>See what bars people are going to.</p>
+        <p style={{color: grey400}}><i className="material-icons">person_pin_circle</i>Then RSVP to your favorite.</p>
+      </div>}
     </header>
   );
 }

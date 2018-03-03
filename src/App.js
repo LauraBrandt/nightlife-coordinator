@@ -159,7 +159,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header isAuth={this.state.isAuthenticated} textShowing={this.state.bars.length === 0}/>
+        <Header 
+          isAuth={this.state.isAuthenticated} 
+          textShowing={this.state.bars.length === 0} 
+          loading={this.state.loading}
+        />
         <Search 
           handleChange={this.handleLocationChange}
           handleSearch={this.handleSearch} 
