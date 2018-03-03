@@ -4,7 +4,6 @@ import queryString from 'query-string';
 import Header from './Header';
 import Search from './Search';
 import BarList from './BarList';
-import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 import Auth from './Auth';
@@ -165,11 +164,8 @@ class App extends Component {
           handleChange={this.handleLocationChange}
           handleSearch={this.handleSearch} 
           location={this.state.location || ""} 
-          disabled={this.state.loading}
+          loading={this.state.loading}
         />
-        {this.state.loading &&
-          <CircularProgress size={60} thickness={5} className="app__progress" style={{display: 'block'}}/>
-        }
         {this.state.location && 
           <BarList 
             bars={this.state.bars} 

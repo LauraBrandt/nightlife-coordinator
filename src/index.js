@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {teal400, indigo400, grey50, fullWhite} from 'material-ui/styles/colors';
+import {teal400, indigo400, grey100, grey50, fullWhite} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './index.css';
 import App from './App';

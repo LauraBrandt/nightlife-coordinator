@@ -18,6 +18,29 @@ body {
   padding: 1.5em;
 }
 
+
+.search__form {
+  margin: auto;
+  display: block;
+  width: 80%;
+  clear: both;
+}
+
+.search__input {
+  width: 80% !important;
+}
+
+.search__button {
+  min-height: 15% !important;
+  min-width: 15% !important;
+  margin-left: 5%;
+}
+
+.search__progress {
+  margin: 15% auto;
+  display: block !important;
+}
+
 @media (min-width: 740px) {
   .header__text {
     font-size: 1.3em;
@@ -26,18 +49,25 @@ body {
   .header__nav-button {
     margin: 1em 0.5em !important;
   }
+
+  .search__form {
+    width: 70%;
 }
 
-.header__h1 {
-  font-family: Raleway, Roboto, sans-serif;
+  .search__input {
+    width: 90% !important;
 }
 
-.material-icons {
-  padding-right: 10px;
+  .search__button {
+    min-height: 8% !important;
+    min-width: 8% !important;
+    margin-left: 2%;
 }
 
-.app__progress {
-  margin: auto;
+  .search__progress {
+    margin: 6% auto;
+    display: block !important;
+  }
 }
 
 .bar__paper {
