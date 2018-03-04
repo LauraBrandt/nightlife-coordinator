@@ -9,6 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import App from './App';
 import Login from './Login';
 import Signup from './Signup';
+import Footer from './Footer';
 import Auth from './Auth';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -27,6 +28,7 @@ const muiTheme = getMuiTheme({
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
      <BrowserRouter>
+      <div>
         <Switch>
           <Route exact path='/login' render={() => {
             const location = sessionStorage.getItem('currentLocation');
@@ -43,6 +45,8 @@ ReactDOM.render(
           }}/>
           <Route path='/' component={App} />
         </Switch>
+        <Footer />
+      </div>
      </BrowserRouter>
    </MuiThemeProvider>, 
   document.getElementById('root'));
