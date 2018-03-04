@@ -18,6 +18,7 @@ const muiTheme = getMuiTheme({
   palette: {
     primary1Color: teal400,
     accent1Color: indigo400,
+    canvasColor: grey100,
     borderColor: grey50,
     shadowColor: fullWhite,
   }

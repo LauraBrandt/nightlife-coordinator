@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import './LoginSignup.css';
+import {indigo400} from 'material-ui/styles/colors';
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -64,50 +66,58 @@ class SignUpPage extends Component {
 
   render() {
     return (
-      <Card>
-        <form onSubmit={this.processForm}>
-          <h2>Sign Up</h2>
+      <div className="ls__wrapper">
+        <Card className="ls__card">
+          <form onSubmit={this.processForm}>
+            <h2 className="ls__header">Sign Up</h2>
 
-          {this.state.errors.summary && <p>{this.state.errors.summary}</p>}
+            {this.state.errors.summary && <p className="ls__error">{this.state.errors.summary}</p>}
 
-          <div>
-            <TextField
-              floatingLabelText="Email"
-              name="email"
-              errorText={this.state.errors.email}
-              onChange={this.handleChange}
-              value={this.state.user.email}
-            />
-          </div>
+            <div>
+              <TextField
+                floatingLabelText="Email"
+                name="email"
+                errorText={this.state.errors.email}
+                onChange={this.handleChange}
+                value={this.state.user.email}
+                floatingLabelFocusStyle={{color: indigo400}}
+                underlineFocusStyle={{borderColor: indigo400}}
+              />
+            </div>
 
-          <div>
-            <TextField
-              floatingLabelText="Display Name"
-              name="name"
-              errorText={this.state.errors.name}
-              onChange={this.handleChange}
-              value={this.state.user.name}
-            />
-          </div>
+            <div>
+              <TextField
+                floatingLabelText="Display Name"
+                name="name"
+                errorText={this.state.errors.name}
+                onChange={this.handleChange}
+                value={this.state.user.name}
+                floatingLabelFocusStyle={{color: indigo400}}
+                underlineFocusStyle={{borderColor: indigo400}}
+              />
+            </div>
 
-          <div>
-            <TextField
-              floatingLabelText="Password"
-              type="password"
-              name="password"
-              onChange={this.handleChange}
-              errorText={this.state.errors.password}
-              value={this.state.user.password}
-            />
-          </div>
+            <div>
+              <TextField
+                floatingLabelText="Password"
+                type="password"
+                name="password"
+                onChange={this.handleChange}
+                errorText={this.state.errors.password}
+                value={this.state.user.password}
+                floatingLabelFocusStyle={{color: indigo400}}
+                underlineFocusStyle={{borderColor: indigo400}}
+              />
+            </div>
 
-          <div>
-            <RaisedButton type="submit" label="Create New Account" primary={true} />
-          </div>
+            <div>
+              <RaisedButton type="submit" label="Create New Account" secondary={true} className="ls__submit-button"/>
+            </div>
 
-          <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
-        </form>
-      </Card>
+            <CardText className="ls__cardtext">Already have an account? <Link to={'/login'} className="ls__link-login">Log in</Link></CardText>
+          </form>
+        </Card>
+      </div>
     );
   }
 }

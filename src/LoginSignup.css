@@ -1,0 +1,63 @@
+.ls__wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ls__card {
+  margin: 5vw;
+  padding: 2em;
+}
+
+.ls__error {
+  color: #F44336; /* mui red500 */
+  text-align: center;
+  font-weight: 500;
+}
+
+.ls__success {
+  color: #4CAF50; /* mui green500 */
+  text-align: center;
+  font-weight: 500;
+}
+
+.ls__header {
+  margin: 0;
+  text-align: center;
+}
+
+.ls__submit-button {
+  margin: 2em 0;
+}
+
+.ls__cardtext {
+  padding: 0 !important;
+}
+
+.ls__link-create {
+  color: #3F51B5; /* mui indigo500 */
+}
+.ls__link-create:visited {
+  color: #5C6BC0; /* mui indigo400 */
+}
+.ls__link-create:hover, .ls__link-create:active {
+  color: #3949AB; /* mui indigo600 */
+}
+
+.ls__link-login {
+  color: #009688 /* mui teal500 */
+}
+.ls__link-login:visited {
+  color: #26A69A; /* mui teal400 */
+}
+.ls__link-login:hover, .ls__link-login:active {
+  color: #00897B; /* mui teal600 */
+}
+
+@media (min-width: 740px) {
+  .ls__card {
+    padding: 3em 4em;
+  }
+}
