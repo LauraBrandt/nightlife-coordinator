@@ -48,7 +48,7 @@ class LoginPage extends Component {
 
       localStorage.setItem('userID', response.data.user.id);
 
-      const currLocation = localStorage.getItem('currentLocation');
+      const currLocation = sessionStorage.getItem('currentLocation');
       if (currLocation) {
         window.location.href = `/search?location=${currLocation}`;
       } else {

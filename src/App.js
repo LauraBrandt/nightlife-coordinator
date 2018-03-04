@@ -35,7 +35,7 @@ class App extends Component {
 
   componentDidMount() {
     const location = queryString.parse(this.props.location.search).location || '';
-    localStorage.setItem('currentLocation', location);
+    sessionStorage.setItem('currentLocation', location);
 
     const userId = localStorage.getItem('userID')
 

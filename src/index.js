@@ -29,7 +29,7 @@ ReactDOM.render(
      <BrowserRouter>
         <Switch>
           <Route exact path='/login' render={() => {
-            const location = localStorage.getItem('currentLocation');
+            const location = sessionStorage.getItem('currentLocation');
             return !Auth.isUserAuthenticated() ?
               <Login />
               :
@@ -38,7 +38,7 @@ ReactDOM.render(
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/logout' render={() => {
               Auth.deauthenticateUser();
-              const location = localStorage.getItem('currentLocation');
+              const location = sessionStorage.getItem('currentLocation');
               return location ? <Redirect to={`/search?location=${location}`}/> : <Redirect to='/'/>
           }}/>
           <Route path='/' component={App} />
