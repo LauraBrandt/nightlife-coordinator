@@ -3,7 +3,7 @@ import Bar from './Bar';
 
 const BarList = (props) => {
   return (
-    <div>
+    <div className="barlist">
       {props.bars && props.bars.map(bar => 
         <Bar 
           key={bar.id} 

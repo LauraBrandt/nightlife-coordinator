@@ -89,40 +89,43 @@ class Bar extends Component {
         <img src={bar.image_url} alt="" className="bar__img"/>
         <div className="bar__info">
           <a href={bar.url} className="bar__name">{bar.name}</a>
-          <RaisedButton 
-            label={`${bar.attendees.length} Going`}
-            primary={true}
-            onClick={isAuth ? this.handleShowPopover : this.handleDialogOpen}
-          />
-          {/* List of attendees */}
-          <Popover
-            open={this.state.popoverOpen && bar.attendees.length > 0}
-            anchorEl={this.state.popoverAnchorEl}
-            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            onRequestClose={this.handleRequestClosePopover}
-          >
-            <Menu>
-              {bar.attendees.map(attendee => <MenuItem primaryText={attendee.displayName} key={attendee._id}/>)}
-            </Menu>
-          </Popover>
+          <div className="bar__rsvp-row">
+            <RaisedButton 
+              label={`${bar.attendees.length} Going`}
+              primary={true}
+              onClick={isAuth ? this.handleShowPopover : this.handleDialogOpen}
+              className="bar__rsvp-button"
+            />
+            {/* List of attendees */}
+            <Popover
+              open={this.state.popoverOpen && bar.attendees.length > 0}
+              anchorEl={this.state.popoverAnchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClosePopover}
+            >
+              <Menu>
+                {bar.attendees.map(attendee => <MenuItem primaryText={attendee.displayName} key={attendee._id}/>)}
+              </Menu>
+            </Popover>
 
-          {/* User adds or removes themself from bar */}
-          <Checkbox
-            label="I'm in!"
-            name={bar.id}
-            checked={
-              !isAuth ?
-              false : 
-              bar.attendees.find( attendee => attendee._id === userId ) ? true : false
-            }
-            onCheck={isAuth ? this.props.updateCheckGoing : this.handleDialogOpen}
-            // disabled={!isAuth}
-            className="bar__checkbox"
-            style={!isAuth && {cursor: 'default'}}
-            iconStyle={!isAuth && {fill: grey500}}
-            labelStyle={!isAuth && {color: grey500}}
-          />
+            {/* User adds or removes themself from bar */}
+            <Checkbox
+              label="I'm in!"
+              name={bar.id}
+              checked={
+                !isAuth ?
+                false : 
+                bar.attendees.find( attendee => attendee._id === userId ) ? true : false
+              }
+              onCheck={isAuth ? this.props.updateCheckGoing : this.handleDialogOpen}
+              // disabled={!isAuth}
+              className="bar__rsvp-checkbox"
+              style={!isAuth && {cursor: 'default'}}
+              iconStyle={!isAuth && {fill: grey500}}
+              labelStyle={!isAuth && {color: grey500}}
+            />
+          </div>
 
           {/* Log in dialog if not auth */}
           <Dialog
