@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import Header from './Header';
 import Search from './Search';
 import BarList from './BarList';
+import Pagination from './Pagination';
 import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 import Auth from './Auth';
@@ -35,9 +36,12 @@ class App extends Component {
 
   componentDidMount() {
     const location = queryString.parse(this.props.location.search).location || '';
+    const page = parseInt(queryString.parse(this.props.location.search).page, 10) || 1;
+    
     sessionStorage.setItem('currentLocation', location);
+    sessionStorage.setItem('currentPage', page);
 
-    const userId = localStorage.getItem('userID')
+    const userId = localStorage.getItem('userID');
 
     this.setState({ 
       location,
@@ -46,13 +50,13 @@ class App extends Component {
     });
 
     if (location) {
-      this.getBars(location);
+      this.getBars(location, page);
     }
   }
 
-  getBars(location) {
+  getBars(location, page) {
     this.setState({ loading: true });
-    axios.get(`/api/bars/${location}`)
+    axios.get(`/api/bars/${location}/${page}`)
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -65,7 +69,7 @@ class App extends Component {
             .then(bars => {
               this.setState({
                 bars,
-                numBars: res.data.total,
+                numBars: res.data.total < 1000 ? res.data.total : 1000, // yelp api offset must be < 1000
                 loading: false
               });
             });
@@ -80,7 +84,8 @@ class App extends Component {
                 {id: "the-dead-rabbit-new-york", name: "The Dead Rabbit", image_url: "https://s3-media3.fl.yelpcdn.com/bphoto/7txsI-CAV_BW6IN4pf5WlQ/o.jpg", url: "https://www.yelp.com/biz/the-dead-rabbit-new-york?…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: [{displayName: "Laura", _id: 123},]},
                 {id: "the-commissioner-brooklyn", name: "The Commissioner", image_url: "https://s3-media4.fl.yelpcdn.com/bphoto/pw9cgbf0snFt_c9LDV4FXg/o.jpg", url: "https://www.yelp.com/biz/the-commissioner-brooklyn…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: []},
                 {id: "the-seville-new-york", name: "The Seville", image_url: "https://s3-media1.fl.yelpcdn.com/bphoto/FsGap3w9Vu7_xxBpt3A0GA/o.jpg", url: "https://www.yelp.com/biz/the-seville-new-york?adju…business_search&utm_source=chUQ0orC9YBTQpmNqwljJw", attendees: []}
-              ]
+              ],
+              numBars: 476
             })
             this.setState({ loading: false }); 
           }, 1000);
@@ -190,6 +195,7 @@ class App extends Component {
             updateUserGoing={this.updateUserGoing}
           />
         }
+        { this.state.numBars > 20 && <Pagination pages={Math.ceil(this.state.numBars/20)}/> }
 
         <Snackbar
           open={this.state.snackbarOpen}

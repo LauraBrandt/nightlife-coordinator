@@ -4,8 +4,10 @@ const router = express.Router();
 const Bar = require('../models/bar.js');
 const User = require('../models/user.js');
 
-router.get('/bars/:location', (req, res) => {
-  const url = `https://api.yelp.com/v3/businesses/search?term=bar&location=${req.params.location}`;
+router.get('/bars/:location/:page', (req, res) => {
+  const numResults = 20;
+  const offset = numResults * (req.params.page - 1);
+  const url = `https://api.yelp.com/v3/businesses/search?term=bar&location=${req.params.location}&offset=${offset}`;
   const accessToken = process.env.YELP_APIKEY;
   axios({ method: 'get', url: url, headers: { 'Authorization': 'Bearer ' + accessToken } })
     .then(result => {

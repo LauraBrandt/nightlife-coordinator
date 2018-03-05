@@ -108,6 +108,21 @@ body {
   margin: 0.5em 0;
 }
 
+.pagination {
+  text-align: center;
+  margin: 0 auto 3em;
+  padding: 0 0.5em;
+}
+
+.pagination__button {
+  color: #CDCDCD !important;
+  min-width: 1em !important; 
+}
+
+.pagination__button_active {
+  color: #26A69A !important; /* mui teal400 */
+}
+
 footer {
   padding: 1.5em 2.5em;
   position: absolute;
