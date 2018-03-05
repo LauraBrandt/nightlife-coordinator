@@ -78,7 +78,7 @@ body {
 }
 
 .bar__info {
-  padding: 0 1em;
+  padding: 0 1em 0 1.5em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

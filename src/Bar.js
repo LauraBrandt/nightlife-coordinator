@@ -7,7 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import {grey500} from 'material-ui/styles/colors';
+import {grey500, indigo400} from 'material-ui/styles/colors';
 
 class Bar extends Component {
   constructor(props) {
@@ -67,6 +67,8 @@ class Bar extends Component {
   render() {
     const { bar, userId, isAuth } = this.props;
 
+    const userGoing = bar.attendees.find( attendee => attendee._id === userId );
+
     const actions = [
       <FlatButton
         label="Log In"
@@ -92,7 +94,7 @@ class Bar extends Component {
           <div className="bar__rsvp-row">
             <RaisedButton 
               label={`${bar.attendees.length} Going`}
-              primary={true}
+              secondary={true}
               onClick={isAuth ? this.handleShowPopover : this.handleDialogOpen}
               className="bar__rsvp-button"
             />
@@ -116,13 +118,17 @@ class Bar extends Component {
               checked={
                 !isAuth ?
                 false : 
-                bar.attendees.find( attendee => attendee._id === userId ) ? true : false
+                userGoing ? true : false
               }
               onCheck={isAuth ? this.props.updateCheckGoing : this.handleDialogOpen}
               // disabled={!isAuth}
               className="bar__rsvp-checkbox"
               style={!isAuth && {cursor: 'default'}}
-              iconStyle={!isAuth && {fill: grey500}}
+              iconStyle={
+                !isAuth ? 
+                {fill: grey500} :
+                userGoing && {fill: indigo400}
+              }
               labelStyle={!isAuth && {color: grey500}}
             />
           </div>
