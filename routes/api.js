@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Bar = require('../models/bar.js');
 const User = require('../models/user.js');
+const authCheckMiddleware = require('../utils/auth-check');
 
 router.get('/bars/:location/:page', (req, res) => {
   const numResults = 20;
@@ -28,7 +29,7 @@ router.get('/attendees/:barid', (req, res) => {
     });
 });
 
-router.put('/attendees/:barid/:userid', (req, res) => {
+router.put('/attendees/:barid/:userid', authCheckMiddleware, (req, res) => {
   const barYelpId = req.params.barid;
   const userId = req.params.userid;
 

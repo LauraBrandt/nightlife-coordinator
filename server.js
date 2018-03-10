@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const express = require('express');
 const localSignupStrategy = require('./utils/local-signup');
 const localLoginStrategy = require('./utils/local-login');
-// const authCheckMiddleware = require('./utils/auth-check');
 const apiRoutes = require('./routes/api');
 const authRoutes = require('./routes/auth');
 require('dotenv').config()
@@ -24,7 +23,6 @@ app.use(passport.initialize());
 // load passport strategies and authentication checker middleware
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
-// app.use('/api', authCheckMiddleware);
 
 // connect to db
 mongoose.Promise = global.Promise;

@@ -143,7 +143,11 @@ class App extends Component {
     const barID = e.target.name;
     const userID = this.state.userId;
 
-    axios.put(`/api/attendees/${barID}/${userID}`)
+    axios.put(`/api/attendees/${barID}/${userID}`, {}, {
+      headers: {
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    })
       .then(res => {
         const barName = this.state.bars.find(bar => bar.id === res.data.bar.yelpID).name
         this.getAttendees(this.state.bars)
