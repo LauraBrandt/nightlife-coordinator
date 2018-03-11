@@ -9,7 +9,7 @@ import Snackbar from 'material-ui/Snackbar';
 import './App.css';
 import Auth from './Auth';
 
-const offline = true;
+const offline = false;
 
 class App extends Component {
   constructor() {

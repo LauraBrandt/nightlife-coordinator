@@ -14,7 +14,7 @@ require('dotenv').config()
 const app = express();
 
 // set up app
-app.use(logger('dev'));
+app.use(logger('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(cors());
@@ -26,7 +26,7 @@ passport.use('local-login', localLoginStrategy);
 
 // connect to db
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MLAB_URI)
   .then(() =>  console.log('Database connection successful'))
   .catch((err) => { console.error(err); process.exit(1); });
 
