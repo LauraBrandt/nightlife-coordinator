@@ -6,7 +6,7 @@ This is a MERN stack web app based on the web application challenges at [FreeCod
 
 ### User stories
 - Users can search for bars in their area and see how many people are going to each (using the Yelp API)
-- Authenticated users can view a list of the people going to each bars, and add/remove themselves from the list 
+- Authenticated users can view a list of the people going to each bar, and add/remove themselves from the list 
 
 View the live version:  
 <https://lb-nightlife-coordinator.herokuapp.com/>
