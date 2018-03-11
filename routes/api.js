@@ -10,11 +10,14 @@ router.get('/bars/:location/:page', (req, res) => {
   const offset = numResults * (req.params.page - 1);
   const url = `https://api.yelp.com/v3/businesses/search?term=bar&location=${req.params.location}&offset=${offset}`;
   const accessToken = process.env.YELP_APIKEY;
+  console.log("about to send yelp request, accessToken:", accessToken)
   axios({ method: 'get', url: url, headers: { 'Authorization': 'Bearer ' + accessToken } })
     .then(result => {
+      console.log("got a result!:", result)
       res.send(result.data);
     })
     .catch(err => {
+      console.log("got an error:", err)
       res.send(err.response.data);
     });
 });
