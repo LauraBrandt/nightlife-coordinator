@@ -9,7 +9,10 @@ const localSignupStrategy = require('./utils/local-signup');
 const localLoginStrategy = require('./utils/local-login');
 const apiRoutes = require('./routes/api');
 const authRoutes = require('./routes/auth');
-require('dotenv').config()
+
+if (process.env.ENVIRONMENT !== 'prod') {
+  require('dotenv').config();
+}
 
 const app = express();
 
@@ -50,4 +53,5 @@ app.use(function(err, req, res, next) {
 });
 
 // listen
-app.listen(3000, () => console.log('App listening on port 3000!'));
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log('App listening on port 3000!'));
