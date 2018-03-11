@@ -6,25 +6,29 @@ const Header = (props) => {
   return (
     <header>
       <nav className="header__nav">
+        <div className="header__nav_left">
+          <FlatButton 
+            label="Home"
+            primary={true}
+            href="/"
+          />
+        </div>
         {props.isAuth ? 
-          <div>
+          <div className="header__nav_right">
             <FlatButton 
-              className="header__nav-button"
               label="Logout"
               primary={true}
               href="/logout"
             />
           </div>
           :
-          <div>
+          <div className="header__nav_right">
             <FlatButton 
-              className="header__nav-button"
               label="Login"
               primary={true}
               href="/login"
             />
             <FlatButton 
-              className="header__nav-button"
               label="Sign up"
               secondary={true}
               href="/signup"

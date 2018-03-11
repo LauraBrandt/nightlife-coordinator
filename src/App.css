@@ -14,12 +14,10 @@ body {
 }
 
 .header__nav {
-  float: right;
-  margin-right: 1em;
-}
-
-.header__nav-button {
-  margin: 1em 0 !important;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+  padding: 1em 0;
 }
 
 .header__text {
@@ -157,12 +155,12 @@ footer .fa-github {
     padding-bottom: 3em;
   }
 
-  .header__text {
-    font-size: 1.3em;
+  .header__nav {
+    margin: 0 2em;
   }
 
-  .header__nav-button {
-    margin: 1em 0.5em !important;
+  .header__text {
+    font-size: 1.3em;
   }
 
   .search__form {
